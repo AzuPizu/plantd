@@ -5,7 +5,7 @@ PLANT'D is a modern MERN-stack application designed to help users manage their p
 
 ---
 
-## 🛠 Technology Stack
+## Technology Stack
 - **Frontend:** React.js (Create React App)
 - **Backend:** Node.js & Express.js
 - **Database:** MongoDB
@@ -22,7 +22,7 @@ PLANT'D is a modern MERN-stack application designed to help users manage their p
 
 ---
 
-## 🚀 Getting Started (Docker Execution)
+## Getting Started (Docker Execution)
 
 Follow these instructions to build and run the application using Docker. 
 
