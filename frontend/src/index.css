@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Hide Scrollbar Globally --- */
+
+/* 1. Chrome, Edge, Safari, and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 2. Firefox and IE/Legacy Edge */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
