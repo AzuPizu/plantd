@@ -1,0 +1,33 @@
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: plantd_mongodb
+    # Use a simpler volume path to avoid Code 62 permission errors
+    volumes:
+      - ./mongo-data:/data/db 
+    ports:
+      - "27017:27017"
+
+  backend:
+    build: ./backend
+    container_name: plantd_backend
+    ports:
+      - "5000:5000"
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      # Add your Cloudinary keys here so the backend can see them
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+    depends_on:
+      - mongodb
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: plantd_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

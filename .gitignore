@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Local Database
+mongo-data/
+
+# Build folders
+build/
+dist/
+
+# OS files
+.DS_Store
