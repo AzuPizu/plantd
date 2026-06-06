@@ -25,7 +25,7 @@ const MyCollection = () => {
     if (!userId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/plants/user/${userId}`);
+      const response = await fetch(`https://plantd-kappa.vercel.app/api/plants/user/${userId}`);
       const data = await response.json();
       if (response.ok) {
         setPlants(data);
@@ -93,7 +93,7 @@ const MyCollection = () => {
     if (formData.image) data.append('image', formData.image);
 
     try {
-      const response = await fetch('http://localhost:5000/api/plants', { method: 'POST', body: data });
+      const response = await fetch('https://plantd-kappa.vercel.app/api/plants', { method: 'POST', body: data });
       if (response.ok) {
         const result = await response.json();
         setIsModalOpen(false);
@@ -112,7 +112,7 @@ const MyCollection = () => {
     if (editingPlant.newImage) data.append('image', editingPlant.newImage);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/plants/${editingPlant._id}`, { method: 'PATCH', body: data });
+      const response = await fetch(`https://plantd-kappa.vercel.app/api/plants/${editingPlant._id}`, { method: 'PATCH', body: data });
       if (response.ok) {
         setEditingPlant(null);
         fetchUserPlants();
@@ -123,7 +123,7 @@ const MyCollection = () => {
   const handleDeletePlant = async (id) => {
     if (!window.confirm("Are you sure you want to delete this plant forever?")) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/plants/${id}`, { method: 'DELETE' });
+      const response = await fetch(`https://plantd-kappa.vercel.app/api/plants/${id}`, { method: 'DELETE' });
       if (response.ok) {
         setEditingPlant(null);
         fetchUserPlants();
@@ -135,8 +135,8 @@ const MyCollection = () => {
     if (!window.confirm("Did this plant really die? This will increase your death count.")) return;
     const userId = localStorage.getItem('userId');
     try {
-      await fetch(`http://localhost:5000/api/auth/increment-death/${userId}`, { method: 'PATCH' });
-      const response = await fetch(`http://localhost:5000/api/plants/${id}`, { method: 'DELETE' });
+      await fetch(`https://plantd-kappa.vercel.app/api/auth/increment-death/${userId}`, { method: 'PATCH' });
+      const response = await fetch(`https://plantd-kappa.vercel.app/api/plants/${id}`, { method: 'DELETE' });
       if (response.ok) {
         setEditingPlant(null);
         fetchUserPlants();

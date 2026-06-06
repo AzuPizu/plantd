@@ -27,11 +27,11 @@ const Dashboard = () => {
       const userId = localStorage.getItem('userId');
       if (!userId) return;
       try {
-        const userRes = await fetch(`http://localhost:5000/api/auth/user/${userId}`);
+        const userRes = await fetch(`https://plantd-kappa.vercel.app/api/auth/user/${userId}`);
         const uData = await userRes.json();
         setUserData(uData);
 
-        const plantRes = await fetch(`http://localhost:5000/api/plants/user/${userId}`);
+        const plantRes = await fetch(`https://plantd-kappa.vercel.app/api/plants/user/${userId}`);
         const pData = await plantRes.json();
         setPlants(pData);
         processLogic(pData, timeRange);

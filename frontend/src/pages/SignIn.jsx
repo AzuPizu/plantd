@@ -28,7 +28,7 @@ const SignIn = () => {
     const endpoint = isSignIn ? '/api/auth/signin' : '/api/auth/signup';
     
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`https://plantd-kappa.vercel.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
