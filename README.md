@@ -28,9 +28,9 @@ The application is fully hosted in a decoupled cloud environment:
 ---
 
 ## Cloud Architecture & Production Setup
-Instead of relying on a traditional stateful server environment, PLANT'D has been optimized for modern cloud native hosting:
+Instead of relying on a traditional stateful server environment, PLANT'D has been optimized for modern cloud-native hosting:
 1. **Serverless Backend:** The Express backend is configured using `vercel.json` to automatically compile into isolated, state-on-demand **Vercel Serverless Functions**.
-2. **Global Database Network:** Connection pooling is managed securely via **MongoDB Atlas**, with dynamic network access configurations enabling seamless handling of cloud traffic.
+2. **Global Database Network:** Connection pooling is managed securely via **MongoDB Atlas**, with dynamic network access configurations (`0.0.0.0/0`) enabling seamless handling of cloud traffic.
 3. **Decoupled Asset Management:** Plant images are uploaded directly to the **Cloudinary API**, removing heavy binary storage loads from the hosting server.
 
 ---
@@ -43,9 +43,10 @@ For local testing, debugging, or grading purposes, the project still contains co
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
 
 ### 2. Environment Setup
-Create a `.env` file inside the `/backend` directory containing your respective local environment credentials (`MONGODB_URI`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`).
-
-### 3. Execution
-Run the following command in the absolute root directory of the project:
-```bash
-docker compose up --build
+Create a `.env` file inside the `/backend` directory and populate it with the following parameters:
+```env
+MONGODB_URI=mongodb://mongodb:27017/plantd
+JWT_SECRET=47f395142925a81c5e75826ce60632ff75c5798505a9bee2a54f04c921c04282
+CLOUDINARY_CLOUD_NAME=Your_Cloudinary_Name
+CLOUDINARY_API_KEY=Your_Cloudinary_API_Key
+CLOUDINARY_API_SECRET=Your_Cloudinary_API_Secret_Key
