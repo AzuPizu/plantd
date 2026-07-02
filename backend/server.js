@@ -1,34 +1,43 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./config/db');
 
 const app = express();
 
 // --- MIDDLEWARES ---
-app.use(cors()); 
+app.use(cors());
 app.use(express.json()); // Parses incoming JSON requests
+
+// Make sure the DB is connected (or wait on the connection already in
+// progress) BEFORE any route handler runs. On a warm serverless instance
+// this resolves instantly. On a cold start it waits for the real
+// connection instead of letting a query fire too early and fail.
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(503).json({ msg: 'Database temporarily unavailable, please try again.' });
+    }
+});
 
 // --- ROUTE IMPORTS ---
 const plantRoutes = require('./routes/plantRoutes');
-const authRoutes = require('./routes/auth'); // <--- MISSING IMPORT
+const authRoutes = require('./routes/auth');
 
 // --- ROUTE USAGE ---
 app.use('/api/plants', plantRoutes);
-app.use('/api/auth', authRoutes); // <--- MISSING LINK: Now /api/auth/signin will work
+app.use('/api/auth', authRoutes);
 
-// --- DATABASE CONNECTION ---
+// --- LOCAL DEV SERVER ---
 const port = process.env.PORT || 5000;
 
-// Connect to MongoDB without trapping the Express app boot cycle
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ Connected to MongoDB Atlas'))
-    .catch((error) => console.error('❌ MongoDB connection failed:', error.message));
-
-// Only run app.listen when running locally (not on Vercel)
 if (process.env.NODE_ENV !== 'production') {
-    app.listen(port, () => {
-        console.log(`✅ Server running locally on port ${port}`);
+    connectDB().then(() => {
+        app.listen(port, () => {
+            console.log(`✅ Server running locally on port ${port}`);
+        });
     });
 }
 
